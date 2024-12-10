@@ -1,1 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入</title>
+    <link rel="icon" type="image/png" href="AB1EDA01-432B-437A-AB9C-7A068EF4D9BC.png"> <!-- 替換成你的網站圖示的路徑 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: center top -250px;
+            background-repeat: no-repeat;
+            background-color: #DDF2FD;
+        }
+
+        form {
+            text-align: center;
+            margin: 100px auto;
+            width: 300px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        button {
+            background-color: #427D9D;
+            color: #fff;
+            border: none;
+            /*text-align: center;*/
+            padding: 10px;
+            cursor: pointer;
+            width: 20%;
+            margin-left: auto !important; /* 將左邊邊緣推向中間 */
+            margin-right: 0 !important;    /* 保持右邊邊緣不變 */
+        }
+
+        a {
+            color: #427D9D;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+        /*左上角的回主頁按鈕*/
+        .back-to-main-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 30px;
+            width: 15%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!--左上角的按鈕返回主頁-->
+    <a class = "back-to-main-btn" href="mainIndex.html" style="text-decoration: none; display: flex; align-items: center; padding: 10px; margin: 10px;">
+        <img src="AB1EDA01-432B-437A-AB9C-7A068EF4D9BC.png" alt="Your Website Icon" style="width: 30px; height: 30px; margin-right: 5px;">
+        <span>SuPer Market</span>
+    </a>
+
+    <form>
+        <h2>登入</h2>
+        <input type="text" placeholder="請輸入帳號" required>
+        <input type="password" placeholder="請輸入密碼" required>
+        <button type="submit">登入</button>
+        <a href="register.html">註冊</a>
+    </form>
+</body>
+</html>
 
