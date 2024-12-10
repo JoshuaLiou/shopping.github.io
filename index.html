@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登入</title>
+    <title>SuPer Market</title>
+
+    <!-- 新增網站圖示 -->
     <link rel="icon" type="image/png" href="AB1EDA01-432B-437A-AB9C-7A068EF4D9BC.png"> <!-- 替換成你的網站圖示的路徑 -->
+
     <style>
+        /* 加入一些基本的樣式 */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -16,67 +20,132 @@
             background-color: #DDF2FD;
         }
 
-        form {
-            text-align: center;
-            margin: 100px auto;
-            width: 300px;
-        }
-
-        input {
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-        }
-
-        button {
+        header {
             background-color: #427D9D;
             color: #fff;
-            border: none;
-            /*text-align: center;*/
+            text-align: center;
             padding: 10px;
-            cursor: pointer;
-            width: 20%;
-            margin-left: auto !important; /* 將左邊邊緣推向中間 */
-            margin-right: 0 !important;    /* 保持右邊邊緣不變 */
         }
 
-        a {
-            color: #427D9D;
-            text-decoration: none;
-            display: block;
-            margin-top: 10px;
+        #product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
         }
-        /*左上角的回主頁按鈕*/
-        .back-to-main-btn {
-            position: fixed;
+
+        .product {
+            width: 200px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* 新增的樣式 */
+        #shopping-cart-btn {
+            position: absolute;
             top: 10px;
             left: 10px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            padding: 30px;
-            width: 15%;
-            background: none;
+            padding: 30px 30px;
             border: none;
             cursor: pointer;
-            font-size: 20px;
+            background-image: url('.vscode/pngtree-shopping-cart-png-image_926924.jpg'); /* 購物車圖片 */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
+        #searchInput {
+            background-color: #9BBEC8;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            ::placeholder,
+            :-ms-input-placeholder,
+            ::-ms-input-placeholder,
+            :-moz-placeholder,
+            :-moz-placeholder {
+                color: #fff;
+            }
+        }
+
+        /* 修改搜索按钮的背景颜色 */
+        #searchForm input[type="submit"] {
+            background-color: #9BBEC8;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            ::placeholder {
+                color: #fff;
+            }
+        }
+        /*帳戶*/
+        #account-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            text-decoration: none;
+        }
+        
     </style>
 </head>
 <body>
-    <!--左上角的按鈕返回主頁-->
-    <a class = "back-to-main-btn" href="mainIndex.html" style="text-decoration: none; display: flex; align-items: center; padding: 10px; margin: 10px;">
-        <img src="AB1EDA01-432B-437A-AB9C-7A068EF4D9BC.png" alt="Your Website Icon" style="width: 30px; height: 30px; margin-right: 5px;">
-        <span>SuPer Market</span>
-    </a>
+    <!-- 新增购物车按钮 -->
+    <button id="shopping-cart-btn" onclick="redirectToShoppingCart()"></button>
 
-    <form>
-        <h2>登入</h2>
-        <input type="text" placeholder="請輸入帳號" required>
-        <input type="password" placeholder="請輸入密碼" required>
-        <button type="submit">登入</button>
-        <a href="register.html">註冊</a>
-    </form>
+    <header>
+        <!-- 新增帳戶按鈕 -->
+        <a id="account-btn" href="login.html">帳戶</a>
+        <!--左上角的icon-->
+        <h1>
+            <img src="AB1EDA01-432B-437A-AB9C-7A068EF4D9BC.png" alt="Your Website Icon" style="width: 80px; height: 80px; margin-right: 10px; margin-top: 5px; ">
+            熟每一個市場
+        </h1>
+        
+        <!-- 搜尋欄位 -->
+        <form id="searchForm" action="search.php">
+            <input type="text" id="searchInput" name="searchInput" placeholder="搜尋商品...">
+            <input type="submit" value="查找">
+        </form>
+
+    </header>
+
+    <!-- 商品欄位容器 -->
+    <div id="product-container"></div>
+
+    <script>
+        // 使用 JavaScript 來處理搜尋功能等等
+        document.getElementById('searchForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // 防止表單提交刷新頁面
+    
+            // 取得搜尋內容
+            var searchContent = document.getElementById('searchInput').value;
+    
+            // 使用 AJAX 進行搜尋
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        // 更新商品列表
+                        document.getElementById('product-container').innerHTML = xhr.responseText;
+                    } else {
+                        console.error('AJAX request failed with status:', xhr.status);
+                    }
+                }
+            };
+    
+            // 發送 POST 請求
+            xhr.open('POST', 'search_products.php', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send('searchInput=' + searchContent);
+        });
+
+        // 新增的函数，用于跳转到购物车页面
+        function redirectToShoppingCart() {
+            window.location.href = 'shopping_cart.html';
+        }
+    </script>
 </body>
 </html>
-
